@@ -1,0 +1,53 @@
+polarplane_pi = PolarPlane(
+            azimuth_units="PI radians",
+            radius_step=0.5, #controls the number of circle things
+            size=7, # actual size of the graph
+            azimuth_label_font_size=30,
+        )
+
+        self.play(FadeOut(title))
+
+        #self.play(FadeIn(polarplane_pi))
+
+        self.wait(2)
+
+        # Zoom out the camera frame
+        self.camera.frame.save_state()
+        self.camera.frame.scale(0.7)  # Adjust for better fit
+        self.camera.frame
+
+        # Parameters
+        a = 2
+        l = 1
+        theta_min = -PI/2 + 0.1
+        theta_max = PI/2 - 0.1
+        numLines = 150
+
+        # Polar grid
+        polar_plane = PolarPlane(radius_max=6, size=6).add_coordinates()
+        self.add(polar_plane)
+
+        # Polar to Cartesian conversion
+        def polar_to_point(r, theta):
+            return np.array([r * np.cos(theta), r * np.sin(theta), 0])
+
+
+        lines = VGroup()
+        for i in range(numLines):
+            theta = theta_min + (theta_max - theta_min) * i / numLines
+
+            # Skip invalid points (where cos(theta) ~ 0)
+            if abs(np.cos(theta)) < 0.01:
+                continue
+
+            r1 = a / np.cos(theta) + l
+            r2 = a / np.cos(theta) - l
+
+            pt1 = polar_to_point(r1, theta)
+            pt2 = polar_to_point(r2, theta)
+
+            lines.add(Line(ORIGIN, pt1, color=GREEN, stroke_opacity=0.6))
+            lines.add(Line(ORIGIN, pt2, color=YELLOW, stroke_opacity=0.6))
+
+        self.play(Write(lines))
+        self.wait()
