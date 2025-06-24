@@ -47,7 +47,7 @@ class Conchoid(MovingCameraScene):
 
         # end of history section
 
-        self.play(FadeOut(VGroup(whatIsAConchoid, conchoidDescription, inventor)))
+        self.play(FadeOut(VGroup(whatIsAConchoid, conchoidDescription, inventor, whatDidHeDo)))
 
         # Basic construction
 
@@ -134,7 +134,7 @@ class Conchoid(MovingCameraScene):
 
         self.play(FadeOut(VGroup(originDot, originLabel, line, lineLabel, straightLine, straightLineLabel, intersectionDot, intersectionLabel, formationOfConchoid, conchoidOfNicomedes, Q1, Q2, q1Label, q2Label)))
 
-        equations
+        # equations
 
         equations = Tex("Equations").move_to(UP*2.5)
         self.play(Write(equations))
@@ -162,13 +162,13 @@ class Conchoid(MovingCameraScene):
         evaluateB.font_size = 34
         self.play(Write(evaluateB))
 
-        end of equations
+        # end of equations
 
         self.wait(3)
         
         # transition
 
-        self.play(FadeOut(VGroup(equations, conchoidEq)))
+        self.play(FadeOut(VGroup(equations, conchoidEq, evaluateK, evaluateB)))
 
         # start of overall construction
 
@@ -216,7 +216,7 @@ class Conchoid(MovingCameraScene):
             self.add(large_conchoid, small_conchoid)  
             curves.add(large_conchoid)
             curves.add(small_conchoid)
-            self.play(tMax.animate.set_value(PI), run_time=5, rate_func=linear)
+            self.play(tMax.animate.set_value(PI), run_time=7, rate_func=linear)
             self.wait()
 
             self.play(FadeOut(lvalue))
