@@ -260,11 +260,16 @@ class Conchoid(MovingCameraScene):
         self.play(Write(diagLine1))
         self.play(Write(diagLine2))
 
+        trisectAngle = Angle(diagLine1, diagLine2, radius=0.5, color=YELLOW)
+        trisectAngleLabel = Tex("30$^\circ$").move_to(LEFT*1.15 + DOWN*1.75)
+        trisectAngleLabel.font_size = 34
+        self.play(Write(VGroup(trisectAngle, trisectAngleLabel)))
+
         self.wait(4)
 
         # end of applications
 
-        self.play(FadeOut(VGroup(usesOfCN, angleTrisection, LineonePointfive, verticalLine, diagLine1, diagLine2)))
+        self.play(FadeOut(VGroup(usesOfCN, angleTrisection, LineonePointfive, verticalLine, diagLine1, diagLine2, trisectAngle, trisectAngleLabel)))
 
         # References
 
