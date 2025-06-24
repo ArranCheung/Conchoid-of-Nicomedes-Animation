@@ -25,17 +25,24 @@ class Conchoid(MovingCameraScene):
 
         # What is a conchoid + History
 
-        whatIsAConchoid = Tex("What is a conchoid?").move_to(UP*1.5)
+        whatIsAConchoid = Tex("What is a conchoid?").move_to(UP*2)
         self.play(Write(whatIsAConchoid))
 
-        conchoidDescription = Tex("A conchoid is a curve generated using a fixed point, a curve and a length k")
+        conchoidDescription = Tex("A conchoid is a curve generated using: a fixed point, a curve and a length k").move_to(UP*1)
         conchoidDescription.font_size = 34
         self.play(Write(conchoidDescription))
-        self.wait(3)
+        self.wait(4)
 
-        inventor = Tex("Invented by Greek mathematician Nicomedes").move_to(DOWN*1.5)
+        inventor = Tex("Invented by Greek mathematician Nicomedes").move_to(DOWN*0.5)
         inventor.font_size = 34
         self.play(Write(inventor))
+
+        self.wait(3)
+
+        whatDidHeDo = Tex("He tried to solve geometric problems such as doubling the cube and trisecting the angle").move_to(DOWN*1.5)
+        whatDidHeDo.font_size = 34
+        self.play(Write(whatDidHeDo))
+
         self.wait(3.4)
 
         # end of history section
@@ -43,6 +50,12 @@ class Conchoid(MovingCameraScene):
         self.play(FadeOut(VGroup(whatIsAConchoid, conchoidDescription, inventor)))
 
         # Basic construction
+
+        construction = Tex("Construction").move_to(UP*2.5)
+        self.play(Write(construction))
+
+        self.wait(0.5)
+        self.play(FadeOut(construction))  
 
         originDot = Dot(ORIGIN, color=RED)
         self.play(Write(originDot))
@@ -62,7 +75,7 @@ class Conchoid(MovingCameraScene):
         self.play(Write(straightLineLabel))
         self.wait(0.3)
 
-        lineMLabel = Tex("m is a line passing through O and line l").move_to(1*RIGHT+3*DOWN)
+        lineMLabel = Tex("m is a line passing through O and given line l").move_to(1*RIGHT+3*DOWN)
         lineMLabel.font_size = 34
         self.play(Write(lineMLabel))
         self.wait(0.6)
@@ -96,7 +109,7 @@ class Conchoid(MovingCameraScene):
         distanceKText = Tex("distance[Q1,p] = distance[Q2,p] = k").move_to(LEFT*2 + 2.5*UP)
         distanceKText.font_size=34
         self.play(Write(distanceKText))
-        self.wait(1.2)
+        self.wait(2)
 
         self.play(FadeOut(distanceKText))
 
@@ -106,6 +119,13 @@ class Conchoid(MovingCameraScene):
         conchoidOfNicomedes.font_size = 34
         self.play(Write((VGroup(formationOfConchoid, conchoidOfNicomedes))))
 
+        self.wait(3.5)
+
+        self.play(FadeOut(VGroup(formationOfConchoid, conchoidOfNicomedes, originDot, originLabel, intersectionDot, intersectionLabel, lineLabel, q1Label, q2Label)))
+
+        self.play(Rotate(VGroup(line, Q1, Q2), 2.5*PI/4, about_point=ORIGIN, run_time=2, rate_func=linear))
+
+
         # end of construction
 
         self.wait(4)
@@ -114,28 +134,35 @@ class Conchoid(MovingCameraScene):
 
         self.play(FadeOut(VGroup(originDot, originLabel, line, lineLabel, straightLine, straightLineLabel, intersectionDot, intersectionLabel, formationOfConchoid, conchoidOfNicomedes, Q1, Q2, q1Label, q2Label)))
 
-        # equations
+        equations
 
         equations = Tex("Equations").move_to(UP*2.5)
         self.play(Write(equations))
 
-        conchoidEq = Tex(r"$r=\frac{b}{sin\theta}\pm k$").move_to(UP*1)
+        conchoidEq = Tex(r"$r=\frac{b}{\sin \theta}\pm k$").move_to(UP*1)
         self.play(Write(conchoidEq))
 
-        highlight = Rectangle().move_to(UP*1)
-        self.play(Circumscribe(highlight, color=YELLOW))
+        self.wait(2)
 
+        explainConstants = Tex("where $y=b$ the asymptote of the curve, $k$ is the distance from the point to the line")
+        explainConstants.font_size = 34
+        self.play(Write(explainConstants))
 
-        
-        #explainationB = Tex("Where the line y=b is the asymptote")
-        #explainationB.font_size = 34
-        #self.play(Write(explainationB))
+        self.wait(3.5)
 
-        #explainationK = Tex("And k is a given distance").move_to(DOWN*1)
-        #explainationK.font_size = 34
-        #self.play(Write(explainationK))
+        self.play(FadeOut(explainConstants))
 
-        # end of equations
+        evaluateK = Tex("$k$ controls the size of the conchoid").move_to(DOWN*0.5)
+        evaluateK.font_size = 34
+        self.play(Write(evaluateK))
+
+        self.wait(2)
+
+        evaluateB = Tex("$b$ controls the distance from the origin to the conchoid").move_to(DOWN*1.5)
+        evaluateB.font_size = 34
+        self.play(Write(evaluateB))
+
+        end of equations
 
         self.wait(3)
         
@@ -204,10 +231,10 @@ class Conchoid(MovingCameraScene):
 
         # Practical uses
 
-        usesOfCN = Tex("Applications").move_to(UP*1.5)
+        usesOfCN = Tex("Applications").move_to(UP*2.5)
         self.play(Write(usesOfCN))
 
-        angleTrisection = Tex("Angle trisection: Splitting an angle into 3 equal angles").move_to(UP*0.5)
+        angleTrisection = Tex("Angle trisection: Splitting an angle into 3 equal angles").move_to(UP*1.5)
         angleTrisection.font_size = 34
         self.play(Write(angleTrisection))
 
@@ -219,8 +246,16 @@ class Conchoid(MovingCameraScene):
         verticalLine.color = YELLOW
         self.play(Write(verticalLine))
 
-        diagLine1 = Line(start=LEFT*2+DOWN*2.5, end=LEFT*0.55+DOWN*0.5)
-        diagLine2 = Line(start=LEFT*2+DOWN*2.5, end=DOWN*1.5)
+        perpAngle = RightAngle(LineonePointfive, verticalLine, length=0.4, color=YELLOW)
+        perpAngleLabel = Tex("90$^\circ$").move_to(LEFT*1 + DOWN*2)
+        perpAngleLabel.font_size = 34
+        self.play(Write(perpAngle))
+        self.play(Write(perpAngleLabel))
+        self.wait(0.75)
+        self.play(FadeOut(VGroup(perpAngleLabel, perpAngle)))
+
+        diagLine1 = Line(start=LEFT*2+DOWN*2.5, end= DOWN*2.5).rotate(PI/6, about_point=LEFT*2+DOWN*2.5)
+        diagLine2 = Line(start=LEFT*2+DOWN*2.5, end= DOWN*2.5).rotate(2*PI/6, about_point=LEFT*2+DOWN*2.5)
 
         self.play(Write(diagLine1))
         self.play(Write(diagLine2))
