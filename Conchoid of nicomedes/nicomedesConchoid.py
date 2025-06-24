@@ -132,7 +132,7 @@ class Conchoid(MovingCameraScene):
 
         # transition
 
-        self.play(FadeOut(VGroup(originDot, originLabel, line, lineLabel, straightLine, straightLineLabel, intersectionDot, intersectionLabel, formationOfConchoid, conchoidOfNicomedes, Q1, Q2, q1Label, q2Label)))
+        self.play(FadeOut(VGroup( line, straightLine, straightLineLabel, Q1, Q2)))
 
         # equations
 
