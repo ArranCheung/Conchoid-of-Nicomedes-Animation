@@ -144,15 +144,11 @@ class Conchoid(MovingCameraScene):
 
         self.wait(2)
 
-        explainConstants = Tex("where $y=b$ the asymptote of the curve, $k$ is the distance from the point to the line")
-        explainConstants.font_size = 34
-        self.play(Write(explainConstants))
+        sinOrCos = Tex("Sin or Cos can be used").move_to(DOWN*0.5)
+        sinOrCos.font_size = 34
+        self.play(Write(sinOrCos))
 
-        self.wait(3.5)
-
-        self.play(FadeOut(explainConstants))
-
-        evaluateK = Tex("$k$ controls the size of the conchoid").move_to(DOWN*0.5)
+        evaluateK = Tex("$k$ controls the size of the conchoid").move_to(DOWN*1)
         evaluateK.font_size = 34
         self.play(Write(evaluateK))
 
@@ -168,7 +164,7 @@ class Conchoid(MovingCameraScene):
         
         # transition
 
-        self.play(FadeOut(VGroup(equations, conchoidEq, evaluateK, evaluateB)))
+        self.play(FadeOut(VGroup(equations, conchoidEq, evaluateK, evaluateB, sinOrCos)))
 
         # start of overall construction
 
@@ -216,6 +212,16 @@ class Conchoid(MovingCameraScene):
             self.add(large_conchoid, small_conchoid)  
             curves.add(large_conchoid)
             curves.add(small_conchoid)
+
+            if l == -3:
+                global k4large, k4small
+                k4large = large_conchoid
+                k4small = small_conchoid
+            elif l == 0:
+                global k1large, k1small
+                k1large = large_conchoid
+                k1small = small_conchoid
+
             self.play(tMax.animate.set_value(PI), run_time=7, rate_func=linear)
             self.wait()
 
@@ -237,6 +243,10 @@ class Conchoid(MovingCameraScene):
         angleTrisection = Tex("Angle trisection: Splitting an angle into 3 equal angles").move_to(UP*1.5)
         angleTrisection.font_size = 34
         self.play(Write(angleTrisection))
+
+        impossibleToDo = Tex("This is impossible to do with a compass and ruler, but can be done with a conchoid").move_to(UP*0.5)
+        impossibleToDo.font_size = 34
+        self.play(Write(impossibleToDo))
 
         LineonePointfive = Line(start=LEFT*2 +DOWN*2.5 ,end= DOWN*2.5)
         LineonePointfive.color = YELLOW
@@ -263,13 +273,71 @@ class Conchoid(MovingCameraScene):
         trisectAngle = Angle(diagLine1, diagLine2, radius=0.5, color=YELLOW)
         trisectAngleLabel = Tex("30$^\circ$").move_to(LEFT*1.15 + DOWN*1.75)
         trisectAngleLabel.font_size = 34
+
         self.play(Write(VGroup(trisectAngle, trisectAngleLabel)))
 
         self.wait(4)
 
         # end of applications
 
-        self.play(FadeOut(VGroup(usesOfCN, angleTrisection, LineonePointfive, verticalLine, diagLine1, diagLine2, trisectAngle, trisectAngleLabel)))
+        self.play(FadeOut(VGroup(impossibleToDo, usesOfCN, angleTrisection, LineonePointfive, verticalLine, diagLine1, diagLine2, trisectAngle, trisectAngleLabel)))
+
+        # Trisecting an angle animation
+
+        straightLineOut = Line(start=ORIGIN, end=3*UP)
+        self.play(Write(straightLineOut))
+        diagLineOut = Line(start=ORIGIN, end=3*LEFT+3*UP)
+        self.play(Write(diagLineOut))
+        angleToTrisect = Angle(straightLineOut, diagLineOut, radius=0.5, color=YELLOW)
+        self.play(Write(angleToTrisect))
+
+        self.play(Write(k1large, color=GREY))
+        self.play(Write(k4small))
+        self.play(Write(k4large))
+
+        self.wait(1.5)
+
+        self.play(FadeOut(angleToTrisect))
+        
+        LineFromIntersection = Line(start=LEFT*1+UP*0.25, end=LEFT*1 + 3.9*UP)
+        LineFromIntersection.color = RED
+
+        intersectionDot = Dot(LEFT*1+UP*1, color=RED)
+        self.play(Write(intersectionDot))
+
+        self.wait(0.75)
+
+        self.play(Write(LineFromIntersection))
+
+        self.wait(1)
+
+        trisectLine = Line(start=ORIGIN, end=LEFT*1 + 3.9*UP)
+        trisectLine.color = RED
+
+        conchoidIntersection = Dot(LEFT*1 + 3.9*UP, color=RED)
+        self.play(Write(conchoidIntersection))
+
+        self.play(Write(trisectLine))
+
+        self.wait(1.5)
+
+        self.play(FadeOut(VGroup(k1large, k4small, k4large)))
+        self.play(FadeOut(VGroup(conchoidIntersection, intersectionDot, LineFromIntersection)))
+
+        TrisectedAngle = Angle(straightLineOut, trisectLine, radius=0.5, color=YELLOW)
+        self.play(Write(TrisectedAngle))
+        TrisectedAngle.set_fill(color=YELLOW, opacity=0.5)
+
+        self.wait(1)
+
+        TrisectedAngleLabel = Tex(r"$\frac{ \theta }{3}$").move_to(RIGHT*0.5 + UP*0.5)
+        self.play(Write(TrisectedAngleLabel))
+
+        self.wait(3)
+
+        # End of trisecting an angle animation
+
+        self.play(FadeOut(VGroup(straightLineOut, diagLineOut, TrisectedAngle, TrisectedAngleLabel, trisectLine)))
 
         # References
 
